@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+.box {
+    display: block;
+    border: 1px solid black;
+    padding: .5rem;
+    margin: .2rem;
+    border-radius: 4px;
+
+    width: 100%;
+}
+
+.flex {
+    display: flex;
+}
+
+.f-row {
+    flex-direction: row;
+}
+
+.f-col {
+    flex-direction: column;
+}
+
+button {
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    padding: .5rem;
+    margin: .2rem;
+    background: #bbb;
+}
+
+.list {
+    width: 272px;
+}
+
+.linkish {
+    text-decoration: none;
+    color: black;
+}
