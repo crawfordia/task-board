@@ -20,7 +20,7 @@ export default class extends React.Component {
             <button 
                 type="submit"
                 onClick={(e) => this.createList(e)}>
-                Add Card
+                Add List
             </button>
             <button 
                 type="button"

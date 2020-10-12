@@ -38,7 +38,7 @@ export default class extends React.Component {
                             className="linkish" 
                             href="#" 
                             onClick={this.toggleDrafting}>
-                                +Add another card
+                                +Add another list
                             </a>
                     }
                 </div>
