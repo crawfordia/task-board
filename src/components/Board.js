@@ -3,6 +3,12 @@ import React from 'react';
 import List from './List';
 import ListComposer from './ListComposer';
 
+import Drag from './Drag';
+
+const selectListCards = (listId, cards) => {
+    return cards.filter(card => card.listId === listId);
+}
+
 export default class extends React.Component {
     constructor(props) {
         super(props);
@@ -10,24 +16,28 @@ export default class extends React.Component {
         this.state = {
             title: props.title,
             lists: props.lists,
+            cards: props.cards,
             drafting: false
         }
 
         this.toggleDrafting = this.toggleDrafting.bind(this);
         this.createList = this.createList.bind(this);
+        this.moveCard = this.moveCard.bind(this);
     }
 
     render() {
         const { title, lists } = this.state;
 
-        return <div>
+        return <Drag.Scope>
             <h1>{ title }</h1>
             <div className="flex f-row">
-                { lists.map((list, i) => {
+                { lists.map((list) => {
                     return <List 
-                        key={i} 
-                        onCreateCard={(card) => this.addCardToList(i, card)}
-                        {...list} />
+                        key={list.id} 
+                        onCreateCard={(card) => this.addCardToList(list.id, card)}
+                        onMoveCard={this.moveCard}
+                        {...list}
+                        cards={selectListCards(list.id, this.state.cards)} />
                 })}
                 <div>
                     { this.state.drafting ? 
@@ -43,7 +53,7 @@ export default class extends React.Component {
                     }
                 </div>
             </div>
-        </div>
+        </Drag.Scope>
     }
 
     toggleDrafting(e) {
@@ -54,21 +64,16 @@ export default class extends React.Component {
         }))
     }
 
-    addCardToList(listIndex, card) {
+    addCardToList(listId, card) {
         this.setState((prev) => ({
-            lists: prev.lists.map((list, index) => {
-                if (index === listIndex) {
-                    return {
-                        ...list,
-                        cards: [
-                            ...list.cards,
-                            card
-                        ]
-                    }
+            cards: [
+                ...prev.cards,
+                {
+                    id: prev.cards.length,
+                    listId: listId,
+                    ...card
                 }
-
-                return list;
-            })
+            ]
         }))
     }
 
@@ -77,10 +82,25 @@ export default class extends React.Component {
             lists: [
                 ...prev.lists,
                 {
-                    title,
-                    cards: []
+                    id: prev.lists.length,
+                    title
                 }
             ]
+        }));
+    }
+
+    moveCard(cardId, listId) {
+        this.setState((prev) => ({
+            cards: prev.cards.map(card => {
+                if (card.id === cardId) {
+                    return {
+                        ...card,
+                        listId
+                    }
+                } else {
+                    return card;
+                }
+            })
         }));
     }
 }

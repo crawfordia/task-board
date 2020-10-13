@@ -2,12 +2,19 @@ export default {
     title: 'Test Board',
     lists: [
         {
-            title: 'Test List',
-            cards: [
-                {
-                    title: 'Test Card'
-                }
-            ]
+            id: 0,
+            title: 'Test List'
+        },
+        {
+            id: 1,
+            title: 'Another List'
+        }
+    ],
+    cards: [
+        {
+            id: 0,
+            listId: 0,
+            title: 'Test Card'
         }
     ]
 }
