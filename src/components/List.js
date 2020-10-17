@@ -18,14 +18,19 @@ export default class extends React.Component {
     }
 
     render() {
-        const { title, cards, onCreateCard } = this.props;
+        const { title, cards, onCreateCard, onSelectCard } = this.props;
 
         return <Drag.Landing onDropItem={this.handleItemDrop}>
             <div className="box list">
                 <h2>{ title }</h2>
                 <div 
                     className="flex f-col">
-                    { cards.map((card) => <Card key={card.id} {...card} />) }
+                    { cards.map((card) => {
+                        return <Card 
+                            key={card.id} 
+                            onSelect={onSelectCard}
+                            {...card} />
+                    }) }
 
                     { this.state.drafting ? 
                         <CardComposer 

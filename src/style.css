@@ -3,6 +3,10 @@
     font-family: sans-serif;
 }
 
+body {
+    margin: 0;
+}
+
 h1, h2, h3 {
     margin: 0;
 }
@@ -45,4 +49,15 @@ button {
 .linkish {
     text-decoration: none;
     color: black;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.modal-container {
+    position: fixed;
+    background: rgba(0, 0, 0, .5);
+    width: 100vw;
+    height: 100vh;
 }

@@ -2,11 +2,17 @@ import React from 'react';
 
 import List from './List';
 import ListComposer from './ListComposer';
+import Modal from './Modal';
 
 import Drag from './Drag';
+import CardFull from './CardFull';
 
 const selectListCards = (listId, cards) => {
     return cards.filter(card => card.listId === listId);
+}
+
+const selectCard = (cards, id) => {
+    return cards.filter(card => card.id === id)[0];
 }
 
 export default class extends React.Component {
@@ -17,18 +23,28 @@ export default class extends React.Component {
             title: props.title,
             lists: props.lists,
             cards: props.cards,
-            drafting: false
+            drafting: false,
+            focusedCard: null
         }
 
         this.toggleDrafting = this.toggleDrafting.bind(this);
         this.createList = this.createList.bind(this);
         this.moveCard = this.moveCard.bind(this);
+        this.selectCard = this.selectCard.bind(this);
+        this.deselectCard = this.deselectCard.bind(this);
     }
 
     render() {
-        const { title, lists } = this.state;
+        const { title, lists, cards, focusedCard } = this.state;
 
         return <Drag.Scope>
+            { this.state.focusedCard != null && 
+                <Modal onClose={this.deselectCard}>
+                    <CardFull 
+                        onClose={this.deselectCard}
+                        {...selectCard(cards, focusedCard)}></CardFull>
+                </Modal>
+            }
             <h1>{ title }</h1>
             <div className="flex f-row">
                 { lists.map((list) => {
@@ -36,8 +52,9 @@ export default class extends React.Component {
                         key={list.id} 
                         onCreateCard={(card) => this.addCardToList(list.id, card)}
                         onMoveCard={this.moveCard}
+                        onSelectCard={this.selectCard}
                         {...list}
-                        cards={selectListCards(list.id, this.state.cards)} />
+                        cards={selectListCards(list.id, cards)} />
                 })}
                 <div>
                     { this.state.drafting ? 
@@ -101,6 +118,18 @@ export default class extends React.Component {
                     return card;
                 }
             })
+        }));
+    }
+
+    selectCard(cardId) {
+        this.setState(() => ({
+            focusedCard: cardId
+        }));
+    }
+
+    deselectCard() {
+        this.setState(() => ({
+            focusedCard: null
         }));
     }
 }

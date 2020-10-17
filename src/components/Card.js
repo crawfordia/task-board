@@ -8,12 +8,13 @@ export default class extends React.Component {
     }
 
     render() {
-        const { title, id } = this.props;
+        const { title, id, onSelect } = this.props;
 
         return <Drag.Item type="card" data={{ id }}>
             <div 
                 draggable={true} 
-                className="box">
+                className="box pointer"
+                onClick={() => onSelect(id)}>
                 <span>{ title }</span>
             </div>
         </Drag.Item>   
