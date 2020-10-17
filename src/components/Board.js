@@ -32,6 +32,7 @@ export default class extends React.Component {
         this.moveCard = this.moveCard.bind(this);
         this.selectCard = this.selectCard.bind(this);
         this.deselectCard = this.deselectCard.bind(this);
+        this.patchCard = this.patchCard.bind(this);
     }
 
     render() {
@@ -42,6 +43,7 @@ export default class extends React.Component {
                 <Modal onClose={this.deselectCard}>
                     <CardFull 
                         onClose={this.deselectCard}
+                        onChangeCard={this.patchCard}
                         {...selectCard(cards, focusedCard)}></CardFull>
                 </Modal>
             }
@@ -130,6 +132,21 @@ export default class extends React.Component {
     deselectCard() {
         this.setState(() => ({
             focusedCard: null
+        }));
+    }
+
+    patchCard(id, changes) {
+        this.setState((prev) => ({
+            cards: prev.cards.map(card => {
+                if (card.id === id) {
+                    return {
+                        ...card,
+                        ...changes
+                    }
+                } else {
+                    return card;
+                }
+            })
         }));
     }
 }
