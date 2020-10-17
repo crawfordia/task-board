@@ -96,7 +96,7 @@ export default class extends React.Component {
         }))
     }
 
-    createList(title) {
+    createList({ title }) {
         this.setState((prev) => ({
             lists: [
                 ...prev.lists,
