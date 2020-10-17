@@ -14,7 +14,13 @@ export default {
         {
             id: 0,
             listId: 0,
-            title: 'Test Card'
+            title: 'Test Card',
+            description: 'This is a more detailed description'
+        },
+        {
+            id: 1,
+            listId: 1,
+            title: 'Another Card'
         }
     ]
 }

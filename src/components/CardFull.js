@@ -6,9 +6,12 @@ const style = {
     background: 'white'
 }
 
-export default ({ title, onClose }) => {
+export default ({ title, description, onClose }) => {
     return <div className="box" style={style}> 
         <h2>{ title }</h2>
+        { description && 
+            <p>{ description }</p>
+        }
         <button onClick={onClose}>Close</button>
     </div>
 }
