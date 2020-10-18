@@ -2,8 +2,6 @@ import React from 'react';
 
 import Board from './components/Board';
 
-import dummyBoard from './dummyBoard';
-
 export default class extends React.Component {
     constructor(props) {
         super(props);
@@ -11,7 +9,7 @@ export default class extends React.Component {
 
     render() {
         return <div>
-            <Board {...dummyBoard} />
+            <Board />
         </div>
     }
 }

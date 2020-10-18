@@ -1,5 +1,7 @@
 import React from 'react';
 
+import dummyBoard from '../dummyBoard';
+
 import List from './List';
 import ListComposer from './ListComposer';
 import Modal from './Modal';
@@ -15,14 +17,29 @@ const selectCard = (cards, id) => {
     return cards.filter(card => card.id === id)[0];
 }
 
+const hydratedState = () => {
+    let localState = window.localStorage.getItem('board');
+    let state;
+
+    if (localState) {
+        state = JSON.parse(localState);
+    }
+
+    if (!state) {
+        state = {
+            ...dummyBoard
+        }
+    }
+
+    return state;
+}
+
 export default class extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            title: props.title,
-            lists: props.lists,
-            cards: props.cards,
+            ...hydratedState(),
             drafting: false,
             focusedCard: null
         }
@@ -33,6 +50,16 @@ export default class extends React.Component {
         this.selectCard = this.selectCard.bind(this);
         this.deselectCard = this.deselectCard.bind(this);
         this.patchCard = this.patchCard.bind(this);
+    }
+
+    componentDidUpdate() {
+        const { title, cards, lists } = this.state;
+
+        window.localStorage.setItem('board', JSON.stringify({
+            title,
+            cards,
+            lists
+        }))
     }
 
     render() {

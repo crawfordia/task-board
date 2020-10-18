@@ -4,10 +4,6 @@ export default {
         {
             id: 0,
             title: 'Test List'
-        },
-        {
-            id: 1,
-            title: 'Another List'
         }
     ],
     cards: [
@@ -16,11 +12,6 @@ export default {
             listId: 0,
             title: 'Test Card',
             description: 'This is a more detailed description'
-        },
-        {
-            id: 1,
-            listId: 1,
-            title: 'Another Card'
         }
     ]
 }
